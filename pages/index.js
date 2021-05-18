@@ -46,7 +46,7 @@ export default function Home() {
     completed ? (
       <MainContent></MainContent>
     ) : (
-      <span className="text-9xl font-bold">
+      <span className="text-7xl md:text-9xl font-bold">
         {hours}:{minutes}:{seconds}
       </span>
     );
