@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
-  const end = new Date(2021, 4, 19);
+  const end = new Date(2021, 4, 19, 13);
 
   const [enter, setEnter] = useState(false);
 
