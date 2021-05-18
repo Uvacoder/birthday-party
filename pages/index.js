@@ -1,65 +1,70 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Countdown from "react-countdown";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 
 export default function Home() {
+  const end = new Date(2021, 4, 19);
+
+  const [enter, setEnter] = useState(false);
+
+  const entered = () => {
+    setEnter(true);
+    const audio = new Audio("/audio.mp3");
+    audio.play();
+  };
+
+  const MainContent = () =>
+    enter ? (
+      <div className="flex flex-col items-center justify-center p-8">
+        <span className="text-4xl md:text-6xl mb-20 font-bold text-center animation-blink">
+          Herzlichen Glückwunsch zum Geburtstag, Alex!
+        </span>
+        <div className="flex justify-center items-center mb-20">
+          <Image src="/Ullis_Logo.png" width={169} height={164}></Image>
+          <span className="text-7xl md:text-9xl font-light px-8 md:px-16">
+            ×
+          </span>
+          <Image src="/otto.jpg" width={149} height={164}></Image>
+        </div>
+        <p className="text-center text-3xl md:text-4xl w-full max-w-4xl">
+          Ullis Welt lädt dich in Kooperation mit Otto Gourmet zu einer
+          exklusiven Steakverkostung ein
+        </p>
+      </div>
+    ) : (
+      <button
+        type="button"
+        onClick={() => entered()}
+        className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        Enter
+      </button>
+    );
+
+  const renderer = ({ formatted: { hours, minutes, seconds }, completed }) =>
+    completed ? (
+      <MainContent></MainContent>
+    ) : (
+      <span className="text-9xl font-bold">
+        {hours}:{minutes}:{seconds}
+      </span>
+    );
+
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
-        <title>Create Next App</title>
+        <title>Alex Geburtstag</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+      <main className="h-screen w-full flex flex-col justify-center items-center">
+        <Countdown
+          date={end}
+          daysInHours={true}
+          renderer={renderer}
+        ></Countdown>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
-  )
+  );
 }
